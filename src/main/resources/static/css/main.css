@@ -1,0 +1,39 @@
+
+#student_dashboard .row.content {height: 54em;}
+
+#student_dashboard .sidebar {
+    height: 100%;
+    padding-left: 0;
+    background-color: #f1f1f1;
+}
+
+body{
+    height : 100vh;
+    overflow : scroll;
+}
+
+#student_dashboard .collapse.width.show {
+    transition: max-width .3s ease, min-width .3s ease;
+    width: 100%;
+    max-width: 20%;
+    min-width: initial;
+}
+#student_dashboard .collapse.width,
+#student_dashboard .collapsing.width {
+    max-width: 0;
+    min-width: 0;
+    width: 0;
+    transition: all .2s ease;
+}
+#student_dashboard .collapse .flex-column {
+    max-height: 100vh;
+    overflow: auto;
+    flex-wrap: nowrap; /* Optional, if you don't want the links to form columns if they overflow */
+}
+#student_dashboard .collapse .flex-column li {
+    width: 100%;
+}
+
+#student_dashboard #collapseExample .nav-item {
+    padding: 1em 1em 1em 1em;
+}
