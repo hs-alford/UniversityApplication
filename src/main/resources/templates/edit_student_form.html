@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Edit Student</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container text-center">
+    <div>
+        <h1>Edit Student</h1>
+    </div>
+    <form th:action="@{/users/save/student}" th:object="${student}"
+          method="post" style="max-width: 600px; margin: 0 auto;">
+        <input type="hidden" th:field="*{student_id}" />
+        <div class="m-3">
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Birthdate: </label>
+                <div class="col-8">
+                    <input type="text" th:field="*{birthdate}" class="form-control" required />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Grade Level: </label>
+                <div class="col-8">
+                    <input type="text" th:field="*{grade_level}" class="form-control" required />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Major: </label>
+                <div class="col-8">
+                    <input type="text" th:field="*{major}" class="form-control"
+                           />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Minor: </label>
+                <div class="col-8">
+                    <input type="text" th:field="*{minor}" class="form-control"
+                            maxlength="50"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-4 col-form-label">User Id: </label>
+                <div class="col-8">
+                    <input type="number" th:field="*{user}" class="form-control" />
+                </div>
+            </div>
+
+
+            <div>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

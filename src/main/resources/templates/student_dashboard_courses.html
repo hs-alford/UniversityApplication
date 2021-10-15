@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="utf-8">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.6.3/css/all.css}" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous" />
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap4-pleasant.min.css}" />
+
+
+    <link  th:href="@{/css/main.css}" rel="stylesheet" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Ubuntu" rel="stylesheet">
+
+    <style>
+        #calendar {
+            max-width: 1100px;
+            margin: 40px auto;
+        }
+    </style>
+
+
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.js'></script>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+
+            var end_dates = document.getElementsByClassName('end_date_course');
+            var start_dates = document.getElementsByClassName('start_date_course');
+            var start_times = document.getElementsByClassName('start_time_course');
+            var end_times = document.getElementsByClassName('end_time_course');
+            var course_days = document.getElementsByClassName('course_days');
+            var course_name = document.getElementsByClassName('course_name');
+            var courseArray = [];
+            for (var i = 0; i < start_times.length; i++) {
+                var course = new Object();
+                course.title = course_name[i].textContent;
+                course.start = start_dates[i].textContent;
+                course.end = end_dates[i].textContent;
+                course.startTime = start_times[i].textContent;
+                course.endTime = end_times[i].textContent;
+                if (course_days[i].textContent == "M-W-F") {
+                    course.daysOfWeek = [1,3,5];
+                } else if (course_days[i].textContent == "T-Th") {
+                    course.daysOfWeek = [2,4];
+                } else {
+                    course.daysOfWeek = [];
+                }
+                course.allDay = false;
+                course.eventDisplay = 'block';
+                console.log("start date: " + course.start + " end date: " + course.end);
+                courseArray.push(course);
+            }
+
+           /* course.start = '2021-08-12T10:00:00';
+            course.end = '2021-08-12T11:00:00';
+            course.daysOfWeek = [1,3,5];
+            course.defaultAllDay = false;*/
+
+            courseArray.push(course);
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                themeSystem: 'bootstrap',
+                initialView: 'timeGridWeek',
+                timeZone: 'UTC',
+                slotDuration: '00:15',
+                initialDate: '2021-08-12',
+                slotLabelFormat: {
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    omitZeroMinute: false,
+                    meridiem: 'short'
+                },
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                events: courseArray
+            });
+
+            calendar.render();
+        });
+
+    </script>
+
+</head>
+<body id="student_dashboard">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary ht-tm-element">
+
+    <div class="container">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#!">Navbar</a>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav mr-auto mt-2 mt-md-0">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/users}">Admin Functions<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/students/dashboard}" >Student Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#!">Link</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post">
+                <h4>Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</b></h4>
+                <!--<span sec:authentication="principal.authorities"></span>-->
+                <input class="form-control mr-sm-2 ml-3" type="submit" value="Sign Out" />
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid h-100">
+    <div class="row">
+        <div class="col-4 col-md-3 collapse width show m-0 p-0 bg-dark" id="collapseExample">
+
+            <ul class="nav nav-pills flex-column navbar-dark sticky-top">
+                <!--<span class="fs-4">University Logo</span>-->
+                <li class="nav-item">
+                    <a th:href="@{/students/dashboard}" class="nav-link">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/students/dashboard/course_registration}">Registration</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" th:href="@{/students/dashboard/courses}">Course Information</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Student Records</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Account</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+                <li class="nav-item align-bottom">
+                    <a th:href="@{/}"  class="nav-link">Sign Out</a>
+                </li>
+            </ul>
+
+        </div>
+        <button class="btn sticky-top bg-dark" data-toggle="collapse"
+                href="#collapseExample" role="button" onclick="switchIcon()" style="border-radius: 0;font-size: 2em;">
+            <i class='fas fa-chevron-left' id="collapseBtn" style="color: white"></i>
+        </button>
+        <div class="col">
+
+            <div class="row">
+
+                <div class="col-12">
+                    <div class="jumbotron">
+                        <h1 class="display-4">Student Courses</h1>
+                        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention
+                            to featured content or information.</p>
+                        <!--<hr class="my-4">
+                        <p>It uses utility classes for typography and spacing to space content out within the larger
+                            container.</p>-->
+                        <p class="lead">
+                            <a class="btn btn-primary" href="#!" role="button">Learn more</a>
+                        </p>
+                    </div>
+                   <!-- <div class="alert alert-primary" role="alert">
+                        <h4 class="alert-heading">Well done!</h4>
+                        You successfully read this important alert message.
+                        <a href="#!" class="alert-link">It contains a link and heading.</a>
+                    </div>-->
+                    <div class="row">
+                        <div class="col-12">
+                            <h2 class="header">Registered Courses For Current Semester</h2>
+                            <table class="table">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Department-Course</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Instructor</th>
+                                    <th scope="col">Time</th>
+                                    <th scope="col">Weekdays</th>
+                                    <th scope="col">Seats Filled</th>
+                                    <th scope="col">Max Seats</th>
+                                    <th scope="col">Semester</th>
+                                    <th scope="col"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <tr th:each="regcourse: ${currentRegistrations}">
+                                    <!--<td th:text="${course.id}">Id</td>-->
+                                    <td th:text="${regcourse.course.department.getSection_abbr() + '-' + regcourse.course.getSection()}"></td>
+                                    <td th:text="${regcourse.course.getName()}" class="course_name">Course</td>
+                                    <td th:text="${regcourse.instructor.getFullName()}"></td>
+                                    <td th:text="${regcourse.start_time}+ ' - ' + ${regcourse.end_time}"></td>
+
+                                    <td th:text="${regcourse.weekdays()}" class="course_days"></td>
+                                    <td th:text="${regcourse.seats_filled}"></td>
+                                    <td th:text="${regcourse.max_seats}"></td>
+                                    <td th:text="${regcourse.semester.getSemester() + ' ' + regcourse.semester.getYear()}"></td>
+                                    <td>
+                                        <a th:href="@{'/students/dashboard/courses/unregister/' + ${regcourse.id}}" id="course_id" class="btn btn-sm btn-danger my-1 my-sm-0">
+                                            <span class="fas fa-edit mr-1"></span>
+                                            Drop</a>
+                                    </td>
+                                    <td th:text="${regcourse.start_date}" class="start_date_course" style="display: none"></td>
+                                    <td th:text="${regcourse.end_date}" class="end_date_course" style="display: none"></td>
+                                    <td th:text="${regcourse.start_time}" class="start_time_course" style="display: none"></td>
+                                    <td th:text="${regcourse.end_time}" class="end_time_course" style="display: none"></td>
+                                </tr>
+
+
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div id='calendar'></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script th:src="@{https://code.jquery.com/jquery-3.3.1.slim.min.js}" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script>
+
+    function switchIcon() {
+        var elm1 = document.getElementById("collapseBtn");
+        var elm2 = document.getElementById("collapseExample");
+        if (!document.getElementById("collapseExample").classList.contains("show")) {
+            elm1.classList.replace("fa-chevron-right", "fa-chevron-left");
+        } else {
+            elm1.classList.replace("fa-chevron-left", "fa-chevron-right");
+        }
+    }
+
+
+</script>
+
+
+
+</body>
+</html>
