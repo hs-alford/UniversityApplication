@@ -1,0 +1,144 @@
+<script th:inline="javascript" type="text/javascript">
+    /*<![CDATA[*/
+
+
+    var ids = [[${courseIds}]];
+    var cs = [[${offered_courses}]];
+    $(document).onload(function() {
+
+        for (var i = 0; i < ids.length; i++) {
+           for (var x = 0; i < cs.length; x++) {
+               if (ids[i] == cs[i]) {
+                   document.getElementById("course_id").style.display = "none";
+               }
+           }
+        }
+    });
+    /*]]>*/
+</script>
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Register Instructor</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container text-center">
+    <div>
+        <h1>New Instructor Registration</h1>
+    </div>
+    <form th:action="@{/users/process_instructor_register}" th:object="${instructor}"
+          method="post" style="max-width: 600px; margin: 0 auto;">
+        <div class="m-3">
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Department: </label>
+                <div class="col-8">
+                    <input type="text" th:field="*{department}" class="form-control" required />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Office: </label>
+                <div class="col-8">
+                    <input type="text" th:field="*{office}" class="form-control" required />
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Registration Success</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container text-center">
+    <h3>Instructor Registration Successful!</h3>
+    <h4><a th:href="@{/users}">Return To Dashboard</a></h4>
+</div>
+
+</body>
+</html>
+
+@PostMapping("/users/process_instructor_register")
+	public String processInstructorRegister(Instructor instructor, @AuthenticationPrincipal UserDetails currentUser) {
+		User user = (User) userService.findByUsername(currentUser.getUsername());
+		instructorService.registerInstructor(instructor);
+		instructor.setUser(user);
+
+		return "register_instructor_success";
+	}
+
+
+@GetMapping("/users/register_instructor")
+	public String registerInstructorForm(Model model, @AuthenticationPrincipal UserDetails currentUser) {
+		User user = (User) userService.findByUsername(currentUser.getUsername());
+		List<Instructor> instructors = instructorService.instructorList();
+		String err = validationService.checkInstructorExist(instructors, user);
+		if (!err.isEmpty()) {
+			model.addAttribute("errorMessageNewInstructor", err);
+			List<User> listUsers = userService.listAll();
+			model.addAttribute("listUsers", listUsers);
+			return "users";
+		}
+
+		model.addAttribute("instructor", new Instructor());
+
+		return "register_instructor_form";
+	}
+
+
+public String checkInstructorExist(List<Instructor> instructors, User user) {
+        for (Instructor ins: instructors) {
+            if (ins.getUser().getId().equals(user.getId())) {
+                return "Instructor already exits for the currently signed in account.";
+            }
+        }
+        return "";
+    }
+
+
+/*@GetMapping("/users/register_student")
+	public String registerStudentForm(Model model, @AuthenticationPrincipal UserDetails currentUser) {
+
+		User user = (User) userService.findByUsername(currentUser.getUsername());
+		List<Student> students = studentservice.studentList();
+		String err = validationService.checkStudentExist(students, user);
+		if (!err.isEmpty()) {
+			model.addAttribute("errorMessageNewStudent", err);
+			List<User> listUsers = userService.listAll();
+			model.addAttribute("listUsers", listUsers);
+			return "users";
+		}
+
+		model.addAttribute("student", new Student());
+		return "register_student_form";
+	}*/
+
+	/*@PostMapping("/users/process_student_register")
+	public String processStudentRegister(Student student, @AuthenticationPrincipal UserDetails currentUser) {
+		User user = (User) userService.findByUsername(currentUser.getUsername());
+		student.setUser(user);
+		studentservice.registerStudent(student);
+
+		return "register_student_success";
+	}*/
