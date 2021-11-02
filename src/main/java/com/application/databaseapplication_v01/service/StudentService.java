@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Service
@@ -54,11 +55,7 @@ public class StudentService {
     public Set<CourseRegistration> studentSchedule(Student student) {
         Semester current = semesterRepo.getActiveSemester(1);
         Set<CourseRegistration> allRegistrations = student.getCourseRegistrations();
-        for (CourseRegistration cr: allRegistrations) {
-            if (cr.getSemester().getId() != current.getId()) {
-                allRegistrations.remove(cr);
-            }
-        }
+        allRegistrations.removeIf(cr -> !Objects.equals(cr.getSemester().getId(), current.getId()));
         return allRegistrations;
     }
 
@@ -70,10 +67,14 @@ public class StudentService {
             pc_End = potentialCourse.getEnd_time().toLocalTime();
             cs_start = cs.getStart_time().toLocalTime();
             cs_end = cs.getEnd_time().toLocalTime();
-            System.out.println("pcstart: " + pc_Start);
-            System.out.println("pcsend: " + pc_End);
-            System.out.println("csstart: " + cs_start);
-            System.out.println("csend: " + cs_end);
+            System.out.println("pcstart: " + potentialCourse.getStart_time());
+            System.out.println("pcsend: " + potentialCourse.getEnd_time());
+            System.out.println("csstart: " + cs.getStart_time());
+            System.out.println("csend: " + cs.getEnd_time());
+            System.out.println("pcstart_local: " + pc_Start);
+            System.out.println("pcsend_local: " + pc_End);
+            System.out.println("csstart_local: " + cs_start);
+            System.out.println("csend_local: " + cs_end);
             System.out.println("course getting registered: " + potentialCourse.getCourse().getName() + " mwf:" + potentialCourse.isMonday_wednesday_friday() + "    tth:" + potentialCourse.isTuesday_thursday());
             System.out.println(cs.getCourse().getName() + " mwf: " + cs.isMonday_wednesday_friday() + "     tth: " + cs.isTuesday_thursday());
             System.out.println();

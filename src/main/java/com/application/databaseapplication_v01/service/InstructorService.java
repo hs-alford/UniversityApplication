@@ -3,6 +3,7 @@ package com.application.databaseapplication_v01.service;
 import com.application.databaseapplication_v01.entity.Instructor;
 import com.application.databaseapplication_v01.entity.Role;
 import com.application.databaseapplication_v01.entity.Student;
+import com.application.databaseapplication_v01.entity.User;
 import com.application.databaseapplication_v01.repository.InstructorRepository;
 import com.application.databaseapplication_v01.repository.RoleRepository;
 import com.application.databaseapplication_v01.repository.StudentRepository;
@@ -25,17 +26,18 @@ public class InstructorService {
     private InstructorRepository instructorRepo;
 
     public void registerInstructor(Instructor instructor) {
-        //Role roleUser = roleRepo.findByName("INSTRUCTOR");
-        //user.addRole(roleUser);
-        //encodePassword(user);
         instructorRepo.save(instructor);
+        Role roleUser = roleRepo.findByName("ROLE_INSTRUCTOR");
+        User user = instructor.getUser();
+        user.addRole(roleUser);
     }
 
     public void save(Instructor instructor) {
-        //encodePassword(user);
         instructorRepo.save(instructor);
     }
 
     public List<Instructor> instructorList() { return instructorRepo.findAll(); }
+
+    public Instructor get(Long id) { return instructorRepo.getById(id); }
 
 }
