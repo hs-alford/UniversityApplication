@@ -18,10 +18,13 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
         CustomUserDetails currentUser = (CustomUserDetails) authentication.getPrincipal();
         if (currentUser.hasRole("ROLE_STUDENT")) {
-            httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/students/dashboard");
+            httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/student/dashboard");
+        }
+        else if (currentUser.hasRole("ROLE_INSTRUCTOR")) {
+            httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/instructor/dashboard");
         }
         else if (currentUser.hasRole("ROLE_ADMIN")) {
-            httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/users");
+            httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/admin/users");
         }
         else {
             httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/");
