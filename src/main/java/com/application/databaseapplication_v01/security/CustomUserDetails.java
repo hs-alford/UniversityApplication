@@ -78,8 +78,13 @@ public class CustomUserDetails implements UserDetails {
 	}
 
 	public String getFullName() {
-
-		return user.getStudent().getFirstName() + " " + user.getStudent().getLastName();
+		if (user.getStudent() != null) {
+			return user.getStudent().getFirstName() + " " + user.getStudent().getLastName();
+		}
+		else if (user.getInstructor() != null) {
+			return user.getInstructor().getFirstName() + " " + user.getInstructor().getLastName();
+		}
+		return user.getUsername();
 	}
 
 }
