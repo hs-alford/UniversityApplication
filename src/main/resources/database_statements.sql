@@ -93,6 +93,8 @@ INSERT INTO roles (id, name)
 VALUES (1, 'ADMIN');
 INSERT INTO roles (id, name)
 VALUES (2, 'STUDENT');
+INSERT INTO roles (id, name)
+VALUES (3, 'INSTRUCTOR');
 
 -- INSERT admin account with username: 'admin' and password 'qwerty123'
 INSERT INTO users (id, username, password)
