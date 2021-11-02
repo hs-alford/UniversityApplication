@@ -9,13 +9,12 @@ import com.application.databaseapplication_v01.entity.Role;
 import com.application.databaseapplication_v01.entity.User;
 import com.application.databaseapplication_v01.service.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
@@ -55,47 +54,6 @@ public class AppController {
 		return "student_dashboard";
 	}
 
-	@GetMapping("/users")
-	public String listUsers(Model model) {
-		List<User> listUsers = userService.listAll();
-		model.addAttribute("listUsers", listUsers);
-		List<Student> listStudents = studentservice.studentList();
-		model.addAttribute("studentList", listStudents);
-		List<Instructor> instructorList = instructorService.instructorList();
-		model.addAttribute("instructorList", instructorList);
-		return "users";
-	}
-
-	@GetMapping("/users/edit/{id}")
-	public String editUser(@PathVariable("id") Long id, Model model) {
-		User user = userService.get(id);
-		List<Role> listRoles = userService.listRoles();
-		model.addAttribute("user", user);
-		model.addAttribute("listRoles", listRoles);
-		return "user_form";
-	}
-
-	@PostMapping("/users/save")
-	public String saveUser(User user) {
-		userService.save(user);
-
-		return "redirect:/users";
-	}
-
-	@GetMapping("/users/edit/student/{id}")
-	public String editStudent(@PathVariable("id") Long id, Model model) {
-		Student student = studentservice.get(id);
-		model.addAttribute("student", student);
-
-		return "edit_student_form";
-	}
-
-	@PostMapping("/users/save/student")
-	public String saveStudent(Student student) {
-		studentservice.save(student);
-
-		return "redirect:/users";
-	}
 
 
 

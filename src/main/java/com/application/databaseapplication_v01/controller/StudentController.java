@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 @Controller
-@RequestMapping("/students")
+@RequestMapping("/student")
 public class StudentController {
 
     @Autowired
@@ -75,10 +75,18 @@ public class StudentController {
 
     @GetMapping("/dashboard/courses")
     public String openStudentCourses(Model model, @AuthenticationPrincipal UserDetails currentUser) {
+        /*Student student = userService.findByUsername(currentUser.getUsername()).getStudent();
+        Set<CourseRegistration> courseRegistrations = studentservice.studentSchedule(student);
+        model.addAttribute("currentRegistrations", courseRegistrations);*/
+        return "student_dashboard_courses";
+    }
+
+    @GetMapping("/dashboard/student_schedule")
+    public String openStudentSchedule(Model model, @AuthenticationPrincipal UserDetails currentUser) {
         Student student = userService.findByUsername(currentUser.getUsername()).getStudent();
         Set<CourseRegistration> courseRegistrations = studentservice.studentSchedule(student);
         model.addAttribute("currentRegistrations", courseRegistrations);
-        return "student_dashboard_courses";
+        return "student_dashboard_schedule";
     }
 
     @GetMapping("/dashboard/courses/unregister/{id}")
