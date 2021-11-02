@@ -18,189 +18,121 @@
     </style>
 </head>
 <body id="student_dashboard" onload="loadCourseRegistrationPage()">
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary ht-tm-element">
+<div th:insert="fragments/top_navbar :: top-navbar"></div>
 
-    <div class="container">
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand" href="#!">Navbar</a>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-            <ul class="navbar-nav mr-auto mt-2 mt-md-0">
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/users}">Admin Functions<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/students/dashboard}" >Student Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#!">Link</a>
-                </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post">
-                <h4>Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</b></h4>
-                <!--<span sec:authentication="principal.authorities"></span>-->
-                <input class="form-control mr-sm-2 ml-3" type="submit" value="Sign Out" />
-            </form>
-        </div>
-    </div>
-</nav>
-
-<div class="container-fluid h-100">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-4 col-md-3 collapse width show m-0 p-0 bg-dark" id="collapseExample">
 
-            <ul class="nav nav-pills flex-column navbar-dark sticky-top">
-                <!--<span class="fs-4">University Logo</span>-->
-                <li class="nav-item">
-                    <a th:href="@{/students/dashboard}" class="nav-link">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" th:href="@{/students/dashboard/course_registration}">Registration</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/students/dashboard/courses}">Course Information</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Student Records</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Account</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
-                </li>
-                <li class="nav-item align-bottom">
-                    <a th:href="@{/}"  class="nav-link">Sign Out</a>
-                </li>
-            </ul>
+        <div class="col-12">
+            <div class="jumbotron">
+                <h1 class="display-3">Register For Courses!</h1>
+                <hr class="my-4">
+                <p>It uses utility classes for typography and spacing to space content out within the larger
+                    container.</p>
+                <div>
+                    <div class="card">
+                        <div class="card-header">
+                            Quote
+                        </div>
+                        <div class="card-body">
+                            <div>
+                                <div class="form-group">
+                                    <label>Department</label>
+                                    <select class="custom-select" id="deptName_select">
+                                        <option value="">Choose Department...</option>
+                                        <div th:each="dept: ${departments}">
+                                            <option th:value="${dept.dept_name}" th:text="${dept.dept_name}"></option>
+                                        </div>
 
-        </div>
-        <button class="btn sticky-top bg-dark" data-toggle="collapse"
-                href="#collapseExample" role="button" onclick="switchIcon()" style="border-radius: 0;font-size: 2em;">
-            <i class='fas fa-chevron-left' id="collapseBtn" style="color: white"></i>
-        </button>
-        <div class="col">
+                                    </select>
+                                </div>
+
+
+
+                                <!--<div class="custom-control custom-radio">
+                                    <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+                                    <label class="custom-control-label" for="customRadio1">Toggle this custom radio</label>
+                                </div>
+
+
+                                <input class="form-control" type="text" value="Text input" id="example-text-input">-->
+
+
+                                <div class="form-group">
+                                    <label>Course Section Number</label>
+                                    <input type="text" class="form-control" id="courseSection_input" placeholder="Section Number... (Optional)">
+                                </div>
+                                <button type="submit" class="btn btn-primary" onclick="searchCourses()">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!--<div class="alert alert-primary" role="alert">
+                <h4 class="alert-heading">Well done!</h4>
+                You successfully read this important alert message.
+                <a href="#!" class="alert-link">It contains a link and heading.</a>
+            </div>-->
+            <!--<div th:if="${conflict}" th:text="${conflict}" class="alert" />-->
+            <div th:if="${conflict}" class="alert alert-primary alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="alert-heading">Sorry!</h4>
+                Your current schedule has a time conflict with this course.
+                <a href="#!" class="alert-link">View your current schedule</a>
+            </div>
 
             <div class="row">
-
                 <div class="col-12">
-                    <div class="jumbotron">
-                        <h1 class="display-3">Register For Courses!</h1>
-                        <hr class="my-4">
-                        <p>It uses utility classes for typography and spacing to space content out within the larger
-                            container.</p>
-                        <div>
-                            <div class="card">
-                                <div class="card-header">
-                                    Quote
-                                </div>
-                                <div class="card-body">
-                                    <div>
-                                        <div class="form-group">
-                                            <label>Department</label>
-                                            <select class="custom-select" id="deptName_select">
-                                                <option value="">Choose Department...</option>
-                                                <div th:each="dept: ${departments}">
-                                                    <option th:value="${dept.dept_name}" th:text="${dept.dept_name}"></option>
-                                                </div>
 
-                                            </select>
-                                        </div>
+                    <table class="table" id="courseList">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Department-Course</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Instructor</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Weekdays</th>
+                            <th scope="col">Seats Filled</th>
+                            <th scope="col">Max Seats</th>
+                            <th scope="col">Semester</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
 
+                        <tr th:each="regcourse: ${offered_courses}" class="courseTableRow table-primary">
+                            <!--<td th:text="${course.id}">Id</td>-->
+                            <td th:text="${regcourse.course.department.getSection_abbr() + '-' + regcourse.course.getSection()}"></td>
+                            <td th:text="${regcourse.course.getName()}">Course</td>
+                            <td th:text="${regcourse.instructor.getFullName()}"></td>
+                            <td th:text="${regcourse.start_time + ' - ' + regcourse.end_time}"></td>
 
+                            <td th:text="${regcourse.weekdays()}"></td>
+                            <td th:text="${regcourse.seats_filled}" class="seats"></td>
+                            <td th:text="${regcourse.max_seats}" class="max"></td>
+                            <td th:text="${regcourse.semester.getSemester() + ' ' + regcourse.semester.getYear()}"></td>
+                            <td>
+                                <a th:href="@{'/students/dashboard/course_registration/process/' + ${regcourse.id}}" id="course_id"  class="btn btn-sm btn-primary my-1 my-sm-0 registration_action">
+                                    <span class="fas fa-edit mr-1"></span>
+                                    Register</a>
+                            </td>
+                            <td th:text="${regcourse.getCourse().getDepartment().dept_name}" class="deptNameSearch" style="display: none"></td>
+                            <td th:text="${regcourse.getCourse().section}" class="courseSectionSearch" style="display: none"></td>
 
-                                        <!--<div class="custom-control custom-radio">
-                                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-                                            <label class="custom-control-label" for="customRadio1">Toggle this custom radio</label>
-                                        </div>
-
-
-                                        <input class="form-control" type="text" value="Text input" id="example-text-input">-->
-
-
-                                        <div class="form-group">
-                                            <label>Course Section Number</label>
-                                            <input type="text" class="form-control" id="courseSection_input" placeholder="Section number">
-                                        </div>
-                                        <button type="submit" class="btn btn-primary" onclick="searchCourses()">Submit</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <!--<div class="alert alert-primary" role="alert">
-                        <h4 class="alert-heading">Well done!</h4>
-                        You successfully read this important alert message.
-                        <a href="#!" class="alert-link">It contains a link and heading.</a>
-                    </div>-->
-                    <!--<div th:if="${conflict}" th:text="${conflict}" class="alert" />-->
-                    <div th:if="${conflict}" class="alert alert-primary alert-dismissible fade show" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                        <h4 class="alert-heading">Sorry!</h4>
-                        Your current schedule has a time conflict with this course.
-                        <a href="#!" class="alert-link">View your current schedule</a>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-12">
-
-                            <table class="table" id="courseList">
-                                <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">Department-Course</th>
-                                    <th scope="col">Title</th>
-                                    <th scope="col">Instructor</th>
-                                    <th scope="col">Time</th>
-                                    <th scope="col">Weekdays</th>
-                                    <th scope="col">Seats Filled</th>
-                                    <th scope="col">Max Seats</th>
-                                    <th scope="col">Semester</th>
-                                    <th scope="col"></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                <tr th:each="regcourse: ${offered_courses}" class="courseTableRow">
-                                    <!--<td th:text="${course.id}">Id</td>-->
-                                    <td th:text="${regcourse.course.department.getSection_abbr() + '-' + regcourse.course.getSection()}"></td>
-                                    <td th:text="${regcourse.course.getName()}">Course</td>
-                                    <td th:text="${regcourse.instructor.getFullName()}"></td>
-                                    <td th:text="${regcourse.start_time + ' - ' + regcourse.end_time}"></td>
-
-                                    <td th:text="${regcourse.weekdays()}"></td>
-                                    <td th:text="${regcourse.seats_filled}" class="seats"></td>
-                                    <td th:text="${regcourse.max_seats}" class="max"></td>
-                                    <td th:text="${regcourse.semester.getSemester() + ' ' + regcourse.semester.getYear()}"></td>
-                                    <td>
-                                        <a th:href="@{'/students/dashboard/course_registration/process/' + ${regcourse.id}}" id="course_id"  class="btn btn-sm btn-primary my-1 my-sm-0 registration_action">
-                                            <span class="fas fa-edit mr-1"></span>
-                                            Register</a>
-                                    </td>
-                                    <td th:text="${regcourse.getCourse().getDepartment().dept_name}" class="deptNameSearch" style="display: none"></td>
-                                    <td th:text="${regcourse.getCourse().section}" class="courseSectionSearch" style="display: none"></td>
-
-                                </tr>
+                        </tr>
 
 
 
-                                </tbody>
-                            </table>
+                        </tbody>
+                    </table>
 
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </div>
 
