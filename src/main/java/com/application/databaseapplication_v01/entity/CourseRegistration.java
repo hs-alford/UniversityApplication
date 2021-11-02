@@ -5,6 +5,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Time;
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParsePosition;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.Set;
 
@@ -48,8 +52,6 @@ public class CourseRegistration implements Serializable {
     @JoinColumn(name = "semester_id", referencedColumnName = "id")
     private Semester semester;
 
-    @OneToMany(mappedBy = "courseRegistration")
-    private Set<CourseCompleted> courseCompletedSet;
 
     public void setId(Long id) {
         this.id = id;
@@ -166,11 +168,6 @@ public class CourseRegistration implements Serializable {
         }
     }
 
-    public Set<CourseCompleted> getCourseCompletedSet() {
-        return courseCompletedSet;
-    }
 
-    public void setCourseCompletedSet(Set<CourseCompleted> courseCompletedSet) {
-        this.courseCompletedSet = courseCompletedSet;
-    }
+
 }

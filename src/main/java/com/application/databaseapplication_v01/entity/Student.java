@@ -61,8 +61,8 @@ public class Student implements Serializable {
     )
     private Set<CourseRegistration> courseRegistrations = new HashSet<>();
 
-    @OneToMany(mappedBy = "student")
-    private Set<CourseCompleted> courseCompletedSet;
+    /*@OneToMany(mappedBy = "student")
+    private Set<CourseCompleted> courseCompletedSet;*/
 
     public Student() {}
 
@@ -167,13 +167,17 @@ public class Student implements Serializable {
         this.courseRegistrations = courseRegistrations;
     }
 
-    public void setCourseCompletedSet(Set<CourseCompleted> courseCompletedSet) {
+    /*public String getFullName() {
+        return this.firstName + " " + this.lastName;
+    }*/
+
+    /*public void setCourseCompletedSet(Set<CourseCompleted> courseCompletedSet) {
         this.courseCompletedSet = courseCompletedSet;
     }
 
     public Set<CourseCompleted> getCourseCompletedSet() {
         return courseCompletedSet;
-    }
+    }*/
 
 
 }

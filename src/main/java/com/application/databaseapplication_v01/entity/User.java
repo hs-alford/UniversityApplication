@@ -32,6 +32,8 @@ public class User implements Serializable {
 	@OneToOne(mappedBy = "user")
 	private Student student;
 
+	@OneToOne(mappedBy = "user")
+	private Instructor instructor;
 
 	public Long getId() {
 		return id;
@@ -78,4 +80,11 @@ public class User implements Serializable {
 		this.student = student;
 	}
 
+	public void setInstructor(Instructor instructor) {
+		this.instructor = instructor;
+	}
+
+	public Instructor getInstructor() {
+		return instructor;
+	}
 }

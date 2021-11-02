@@ -28,6 +28,10 @@ public class Instructor implements Serializable {
     @Column(nullable = true, length = 50)
     private String office;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
     @OneToMany(mappedBy = "instructor")
     private Set<CourseRegistration> courseRegistrations;
 
@@ -101,4 +105,11 @@ public class Instructor implements Serializable {
         return this.firstName + " " + this.lastName;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
