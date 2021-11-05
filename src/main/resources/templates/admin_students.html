@@ -42,17 +42,10 @@
                     </div>
                 </form>
 
-                <div class="list-group">
-                    <a th:href="@{/admin/users}" class="list-group-item list-group-item-action ">Users</a>
-                    <a th:href="@{/admin/students}" class="list-group-item list-group-item-action active">Students</a>
-                    <a th:href="@{/admin/instructors}" class="list-group-item list-group-item-action">Instructors</a>
-                    <a href="#" class="list-group-item list-group-item-action">Courses</a>
-                    <a href="#" class="list-group-item list-group-item-action">Reports</a>
-                </div>
+                <div th:insert="fragments/admin/admin_tables_sidebar :: admin_tables_sidebar"></div>
             </div>
-
             <div class="col-md-9">
-                <a th:href="@{/admin/students/register_student}" class="btn btn-success" style="margin-bottom: 1em">New Student Registration <span class="fas fa-user-plus"></span></a>
+                <a th:href="@{/admin/students/new}" class="btn btn-success" style="margin-bottom: 1em">New Student Registration <span class="fas fa-user-plus"></span></a>
 
                 <table class="table table-hover">
                     <thead class="thead-light">

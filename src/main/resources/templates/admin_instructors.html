@@ -39,16 +39,10 @@
                     </div>
                 </form>
 
-                <div class="list-group">
-                <a th:href="@{/admin/users}" class="list-group-item list-group-item-action">Users</a>
-                <a th:href="@{/admin/students}" class="list-group-item list-group-item-action">Students</a>
-                <a th:href="@{/admin/instructors}" class="list-group-item list-group-item-action active">Instructors</a>
-                <a href="#" class="list-group-item list-group-item-action">Courses</a>
-                <a href="#" class="list-group-item list-group-item-action">Reports</a>
-            </div>
+                <div th:insert="fragments/admin/admin_tables_sidebar :: admin_tables_sidebar"></div>
             </div>
             <div class="col-md-9">
-                <a th:href="@{/admin/instructors/register}" class="btn btn-success" style="margin-bottom: 1em">New Instructor Registration <span class="fas fa-user-plus"></span></a>
+                <a th:href="@{/admin/instructors/new}" class="btn btn-success" style="margin-bottom: 1em">New Instructor Registration <span class="fas fa-user-plus"></span></a>
 
                 <table class="table">
                     <thead class="thead-light">
@@ -57,6 +51,7 @@
                         <th scope="col">Name</th>
                         <th scope="col">Username</th>
                         <th scope="col">Email</th>
+                        <th scope="col">Phone</th>
                         <th scope="col">Department</th>
                         <th scope="col">Office</th>
                         <th scope="col">Actions
@@ -70,15 +65,18 @@
                         <td th:text="${instructor.getFullName()}"></td>
                         <td th:text="${instructor.getUser().getUsername()}"></td>
                         <td th:text="${instructor.email}"></td>
-                        <td th:text="${instructor.department}"></td>
+                        <td th:text="${instructor.phone}"></td>
+                        <td th:text="${instructor.department.dept_name}"></td>
                         <td th:text="${instructor.office}"></td>
                         <td>
-                            <a th:href="@{'/admin/instructors/edit/' + ${instructor.id}}" class="btn btn-sm btn-primary my-1 my-sm-0">
-                                <span class="fas fa-edit mr-1"></span>
-                                Edit</a>
-                            <a href="#" class="btn btn-sm btn-danger my-1 my-sm-0">
-                                <span class="fas fa-trash mr-1"></span>
-                                Delete</a>
+                            <div class="btn-group">
+                                <a th:href="@{'/admin/instructors/edit/' + ${instructor.id}}" class="btn btn-sm btn-primary my-1 my-sm-0">
+                                    <span class="fas fa-edit mr-1"></span>
+                                    Edit</a>
+                                <a href="#" class="btn btn-sm btn-danger my-1 my-sm-0">
+                                    <span class="fas fa-trash mr-1"></span>
+                                    Delete</a>
+                            </div>
                         </td>
                     </tr>
 
