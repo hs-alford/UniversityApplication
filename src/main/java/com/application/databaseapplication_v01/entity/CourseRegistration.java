@@ -40,6 +40,8 @@ public class CourseRegistration implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date end_date;
 
+    private String course_grade;
+
     @ManyToOne
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     private Course course;
@@ -147,6 +149,14 @@ public class CourseRegistration implements Serializable {
 
     public void setSemester(Semester semester) {
         this.semester = semester;
+    }
+
+    public String getCourse_grade() {
+        return course_grade;
+    }
+
+    public void setCourse_grade(String course_grade) {
+        this.course_grade = course_grade;
     }
 
     public String weekdays() {

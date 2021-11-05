@@ -39,6 +39,17 @@ public class UserService {
 		return userRepo.findAll();
 	}
 
+	public List<User> listAllUsersWithoutStudentOrInstructor() {
+		List<User> users = listAll();
+		for (User u: users
+			 ) {
+			if (!(u.getStudent() == null && u.getInstructor() == null)) {
+				users.remove(u);
+			}
+		}
+		return users;
+	}
+
 	public User get(Long id) {
 		return userRepo.findById(id).get();
 	}

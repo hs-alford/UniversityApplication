@@ -19,6 +19,9 @@ public class Department implements Serializable {
     @OneToMany(mappedBy = "department")
     private Set<Course> courses;
 
+    @OneToMany(mappedBy = "department")
+    private Set<Instructor> instructors;
+
     public Long getId() {
         return id;
     }

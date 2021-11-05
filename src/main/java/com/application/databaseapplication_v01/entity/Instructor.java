@@ -22,8 +22,12 @@ public class Instructor implements Serializable {
     @Column(name = "last_name", nullable = false, length = 20)
     private String lastName;
 
-    @Column(nullable = false, length = 150)
-    private String department;
+    @Column(name = "phone")
+    private String phone;
+
+    @ManyToOne
+    @JoinColumn(name = "department_id", referencedColumnName = "id")
+    private Department department;
 
     @Column(nullable = true, length = 50)
     private String office;
@@ -37,12 +41,12 @@ public class Instructor implements Serializable {
 
     public Instructor() {}
 
-    public String getDepartment() {
-        return department;
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
+    public Department getDepartment() {
+        return department;
     }
 
     public String getOffice() {
@@ -111,5 +115,13 @@ public class Instructor implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

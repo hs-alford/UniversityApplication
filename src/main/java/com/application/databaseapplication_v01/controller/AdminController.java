@@ -1,9 +1,7 @@
 package com.application.databaseapplication_v01.controller;
 
-import com.application.databaseapplication_v01.entity.Instructor;
-import com.application.databaseapplication_v01.entity.Role;
-import com.application.databaseapplication_v01.entity.Student;
-import com.application.databaseapplication_v01.entity.User;
+import com.application.databaseapplication_v01.entity.*;
+import com.application.databaseapplication_v01.service.DepartmentService;
 import com.application.databaseapplication_v01.service.InstructorService;
 import com.application.databaseapplication_v01.service.StudentService;
 import com.application.databaseapplication_v01.service.UserService;
@@ -30,14 +28,13 @@ public class AdminController {
     @Autowired
     private InstructorService instructorService;
 
+    @Autowired
+    private DepartmentService departmentService;
+
     @GetMapping("/users")
     public String listUsers(Model model) {
         List<User> listUsers = userService.listAll();
         model.addAttribute("listUsers", listUsers);
-        List<Student> listStudents = studentservice.studentList();
-        model.addAttribute("studentList", listStudents);
-        List<Instructor> instructorList = instructorService.instructorList();
-        model.addAttribute("instructorList", instructorList);
         return "admin_users";
     }
 
@@ -47,7 +44,15 @@ public class AdminController {
         List<Role> listRoles = userService.listRoles();
         model.addAttribute("user", user);
         model.addAttribute("listRoles", listRoles);
-        return "user_form";
+        return "admin_edit_user";
+    }
+
+    @GetMapping("/users/new")
+    public String createNewUser(Model model) {
+        User user = new User();
+        model.addAttribute("user", user);
+        model.addAttribute("listRoles", userService.listRoles());
+        return "admin_edit_user";
     }
 
     @PostMapping("/users/save")
@@ -67,6 +72,14 @@ public class AdminController {
     @GetMapping("/students/edit/{id}")
     public String editStudent(@PathVariable("id") Long id, Model model) {
         Student student = studentservice.get(id);
+        model.addAttribute("student", student);
+
+        return "admin_edit_student";
+    }
+
+    @GetMapping("/students/new")
+    public String createNewStudent(Model model) {
+        Student student = new Student();
         model.addAttribute("student", student);
         return "admin_edit_student";
     }
@@ -89,8 +102,19 @@ public class AdminController {
     public String editInstructors(@PathVariable("id") Long id, Model model) {
         Instructor instructor = instructorService.get(id);
         model.addAttribute("instructor", instructor);
+        List<Department> departments = departmentService.getAllDepartments();
+        departments.remove(instructor.getDepartment());
+        model.addAttribute("departments", departments);
+        return "admin_edit_instructor";
+    }
 
-        return "edit_instructor_form";
+    @GetMapping("/instructors/new")
+    public String createNewInstructor(Model model) {
+        Instructor instructor = new Instructor();
+        model.addAttribute("instructor", instructor);
+        List<Department> departments = departmentService.getAllDepartments();
+        model.addAttribute("departments", departments);
+        return "admin_edit_instructor";
     }
 
     @PostMapping("/instructors/save/instructor")
