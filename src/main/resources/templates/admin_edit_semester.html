@@ -3,7 +3,7 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="utf-8">
-    <title>Admin Edit/Create Users</title>
+    <title>Admin Edit/Create Semesters</title>
     <!--<link rel="stylesheet" type="text/css" th:href="@{webjars/bootstrap/css/bootstrap.min.css}" />-->
     <!--<script type="text/javascript" th:src="@{webjars/jquery/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{webjars/bootstrap/js/bootstrap.min.js}"></script>-->
@@ -28,58 +28,45 @@
 
     <div class="container py-5 mb5">
 
-        <h1 class="mb-5 text-center" id="testcss">User Account: View, Edit, Create</h1>
+        <h1 class="mb-5 text-center" id="testcss">Semester View, Edit, Create</h1>
 
-        <form th:action="@{/admin/users/save/user}" th:object="${user}" method="post">
+        <form th:action="@{/admin/semesters/save/semester}" th:object="${semester}" method="post">
             <input type="hidden" th:field="*{id}" />
-            <h4 class="mb-3">Student Information</h4>
+            <h4 class="mb-3">Semester Information</h4>
 
             <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label>Username</label>
-                    <input type="text"  th:field="*{username}" class="form-control" placeholder="Username" required />
+                <div class="col-md-5  mb-3">
+                    <label>Semester</label>
+                    <select class="custom-select d-block " th:field="*{semester}" required >
+                        <option th:value="*{semester}" th:text="*{semester} ? *{semester} : 'Choose Semester...'">Choose Semester..</option>
+                        <div th:each="name: ${semesterSessionNames}">
+                            <option th:value="${name}" th:text="${name}"></option>
+                        </div>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label>Year</label>
+                    <input type="text" th:field="*{year}" class="form-control" required />
                     <div class="invalid-feedback">
-                        Valid Username is required.
+                        Valid year code is required.
                     </div>
                 </div>
+                <div class="col-md-4 mb-3">
+                    <label>Status</label>
+                    <!--<input type="text" class="form-control" th:field="*{active}" />-->
+                    <select class="custom-select d-block" th:field="*{active}" required>
+                        <option th:value="*{active}" th:text="*{active} ? *{active} : 'Semester Status...'">Semester Status...</option>
+                        <option value="0">Inactive (Semester Completed)</option>
+                        <option value="1">Active (Current Session)</option>
 
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label>Password</label>
-                    <input type="password" th:field="*{password}" class="form-control"
-                           id="pwd" placeholder="Password" required>
+                    </select>
                     <div class="invalid-feedback">
-                        Please enter a valid password.
+                        Semester status is required.
                     </div>
                 </div>
-
-            </div>
-
-            <div class="row">
-
-                <div class="col-md-6 mb-3">
-                    <div>
-                        <label>Roles:</label>
-
-                        <th:block th:each="role: ${listRoles}">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input ml-1 mr-1" th:field="*{roles}"
-                                       th:value="${role.id}" th:id="${role.name} + ${role.id}">
-                                <label class="custom-control-label ml-1 mr-4" th:text="${role.name}"
-                                       th:for="${role.name} + ${role.id}"</label>
-
-
-                            </div>
-                        </th:block>
-                    </div>
-                </div>
-
             </div>
 
             <hr class="mb-4">
-
             <button class="btn btn-primary btn-lg btn-block" type="submit">Save</button>
         </form>
 

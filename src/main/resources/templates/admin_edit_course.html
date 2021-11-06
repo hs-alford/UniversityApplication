@@ -3,7 +3,7 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="utf-8">
-    <title>Admin Edit/Create Users</title>
+    <title>Admin Edit/Create Courses</title>
     <!--<link rel="stylesheet" type="text/css" th:href="@{webjars/bootstrap/css/bootstrap.min.css}" />-->
     <!--<script type="text/javascript" th:src="@{webjars/jquery/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{webjars/bootstrap/js/bootstrap.min.js}"></script>-->
@@ -28,58 +28,67 @@
 
     <div class="container py-5 mb5">
 
-        <h1 class="mb-5 text-center" id="testcss">User Account: View, Edit, Create</h1>
+        <h1 class="mb-5 text-center" id="testcss">Course View, Edit, Create</h1>
 
-        <form th:action="@{/admin/users/save/user}" th:object="${user}" method="post">
+        <form th:action="@{/admin/courses/save/course}" th:object="${course}" method="post">
             <input type="hidden" th:field="*{id}" />
-            <h4 class="mb-3">Student Information</h4>
+            <h4 class="mb-3">Course Information</h4>
+
+            <!--<div class="row">
+                <div class="col-md-4  mb-3">
+                    <label>Id</label>
+                    <input type="text" th:field="*{id}" class="form-control" disabled />
+                </div>
+            </div>-->
 
             <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label>Username</label>
-                    <input type="text"  th:field="*{username}" class="form-control" placeholder="Username" required />
+                <div class="col-md-10  mb-3">
+                    <label>Course Name</label>
+                    <input type="text"  th:field="*{name}" class="form-control" required />
                     <div class="invalid-feedback">
-                        Valid Username is required.
+                        Valid name is required.
                     </div>
                 </div>
+            </div>
 
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label>Department</label>
+                    <select class="custom-select" id="deptName_select" th:field="*{department}">
+                        <option th:value="*{department}" th:text="*{department} ? *{department.dept_name} : 'Choose Department...'">Choose Department..</option>
+                        <div th:each="dept: ${departments}">
+                            <option th:value="${dept.id}" th:text="${dept.dept_name}"></option>
+                        </div>
+
+                    </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label>Section</label>
+                    <input type="text" th:field="*{section}" class="form-control" required />
+                    <div class="invalid-feedback">
+                        Valid section is required.
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label>Credit Hours</label>
+                    <input type="text" th:field="*{credit_hours}" class="form-control" required />
+                    <div class="invalid-feedback">
+                        Credit hours required.
+                    </div>
+                </div>
             </div>
 
             <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label>Password</label>
-                    <input type="password" th:field="*{password}" class="form-control"
-                           id="pwd" placeholder="Password" required>
-                    <div class="invalid-feedback">
-                        Please enter a valid password.
-                    </div>
-                </div>
+                <div class="col-md-10 mb-3">
+                    <label>Description <div class="text-muted">(Optional)</div></label>
+                    <textarea class="form-control" th:field="*{description}" rows="3" ></textarea>
 
-            </div>
-
-            <div class="row">
-
-                <div class="col-md-6 mb-3">
-                    <div>
-                        <label>Roles:</label>
-
-                        <th:block th:each="role: ${listRoles}">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input ml-1 mr-1" th:field="*{roles}"
-                                       th:value="${role.id}" th:id="${role.name} + ${role.id}">
-                                <label class="custom-control-label ml-1 mr-4" th:text="${role.name}"
-                                       th:for="${role.name} + ${role.id}"</label>
-
-
-                            </div>
-                        </th:block>
-                    </div>
                 </div>
 
             </div>
 
             <hr class="mb-4">
-
             <button class="btn btn-primary btn-lg btn-block" type="submit">Save</button>
         </form>
 
