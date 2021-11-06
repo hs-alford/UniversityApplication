@@ -23,6 +23,15 @@ public class CourseService {
         return courseList;
     }
 
+    public List<Course> courseList() {
+        return courseRepo.findAll();
+    }
 
+    public Course get(Long id) {
+        return courseRepo.getById(id);
+    }
 
+    public void save(Course course) {
+        courseRepo.save(course);
+    }
 }

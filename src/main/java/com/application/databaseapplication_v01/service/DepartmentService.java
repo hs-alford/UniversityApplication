@@ -17,4 +17,12 @@ public class DepartmentService {
     public List<Department> getAllDepartments() {
         return departmentRepo.findAll();
     }
+
+    public void save(Department department) {
+        departmentRepo.save(department);
+    }
+
+    public Department get(Long id) {
+        return departmentRepo.getById(id);
+    }
 }

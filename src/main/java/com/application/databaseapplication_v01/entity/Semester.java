@@ -61,6 +61,10 @@ public class Semester implements Serializable {
         this.active = active;
     }
 
+    public Integer getActive() {
+        return active;
+    }
+
     public Integer isActive() {
         return active;
     }

@@ -1,10 +1,7 @@
 package com.application.databaseapplication_v01.controller;
 
 import com.application.databaseapplication_v01.entity.*;
-import com.application.databaseapplication_v01.service.DepartmentService;
-import com.application.databaseapplication_v01.service.InstructorService;
-import com.application.databaseapplication_v01.service.StudentService;
-import com.application.databaseapplication_v01.service.UserService;
+import com.application.databaseapplication_v01.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -30,6 +28,12 @@ public class AdminController {
 
     @Autowired
     private DepartmentService departmentService;
+
+    @Autowired
+    private CourseService courseService;
+
+    @Autowired
+    private SemesterService semesterService;
 
     @GetMapping("/users")
     public String listUsers(Model model) {
@@ -55,7 +59,7 @@ public class AdminController {
         return "admin_edit_user";
     }
 
-    @PostMapping("/users/save")
+    @PostMapping("/users/save/user")
     public String saveUser(User user) {
         userService.save(user);
 
@@ -122,5 +126,102 @@ public class AdminController {
         instructorService.save(instructor);
 
         return "redirect:/admin/instructors";
+    }
+
+    @GetMapping("/courses")
+    public String listCourses(Model model) {
+        List<Course> courseList = courseService.courseList();
+        model.addAttribute("courseList", courseList);
+        return "admin_courses";
+    }
+
+    @GetMapping("/courses/edit/{id}")
+    public String editCourses(@PathVariable("id") Long id, Model model) {
+        Course course = courseService.get(id);
+        model.addAttribute("course", course);
+        List<Department> departments = departmentService.getAllDepartments();
+        departments.remove(course.getDepartment());
+        model.addAttribute("departments", departments);
+        return "admin_edit_course";
+    }
+
+    @GetMapping("/courses/new")
+    public String createNewCourse(Model model) {
+        Course course = new Course();
+        model.addAttribute("course", course);
+        List<Department> departments = departmentService.getAllDepartments();
+        model.addAttribute("departments", departments);
+        return "admin_edit_course";
+    }
+
+    @PostMapping("/courses/save/course")
+    public String saveCourse(Course course) {
+        courseService.save(course);
+
+        return "redirect:/admin/courses";
+    }
+
+    @GetMapping("/departments")
+    public String listDepartments(Model model) {
+        List<Department> departmentList = departmentService.getAllDepartments();
+        model.addAttribute("departmentList", departmentList);
+        return "admin_departments";
+    }
+
+    @GetMapping("/departments/edit/{id}")
+    public String editDepartments(@PathVariable("id") Long id, Model model) {
+        Department department = departmentService.get(id);
+        model.addAttribute("department", department);
+
+
+        return "admin_edit_department";
+    }
+
+    @GetMapping("/departments/new")
+    public String createNewDepartment(Model model) {
+        Department department = new Department();
+        model.addAttribute("department", department);
+
+        return "admin_edit_department";
+    }
+
+    @PostMapping("/departments/save/department")
+    public String saveDepartment(Department department) {
+        departmentService.save(department);
+
+        return "redirect:/admin/departments";
+    }
+
+    @GetMapping("/semesters")
+    public String listSemesters(Model model) {
+        List<Semester> semesterList = semesterService.getAllSemesters();
+        model.addAttribute("semesterList", semesterList);
+
+        return "admin_semesters";
+    }
+
+    @GetMapping("/semesters/edit/{id}")
+    public String editSemesters(@PathVariable("id") Long id, Model model) {
+        Semester semester = semesterService.get(id);
+        model.addAttribute("semester", semester);
+        ArrayList<String> semesterSessionNames = semesterService.semesterSessionNames();
+        semesterSessionNames.remove(semester.getSemester());
+        model.addAttribute("semesterSessionNames", semesterSessionNames);
+        return "admin_edit_semester";
+    }
+
+    @GetMapping("/semesters/new")
+    public String createNewSemester(Model model) {
+        Semester semester = new Semester();
+        model.addAttribute("semester", semester);
+        model.addAttribute("semesterSessionNames", semesterService.semesterSessionNames());
+        return "admin_edit_semester";
+    }
+
+    @PostMapping("/semesters/save/semester")
+    public String saveSemester(Semester semester) {
+        semesterService.save(semester);
+
+        return "redirect:/admin/semesters";
     }
 }
