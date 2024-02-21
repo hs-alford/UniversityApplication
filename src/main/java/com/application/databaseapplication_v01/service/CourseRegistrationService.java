@@ -72,7 +72,7 @@ public class CourseRegistrationService {
         courseReg.decrementSeatsFilled();
     }
 
-    /*public boolean checkConflictingTimes(CourseRegistration courseReg, Set<CourseRegistration> currentRegistrations) {
+    public boolean checkConflictingTimes(CourseRegistration courseReg, Set<CourseRegistration> currentRegistrations) {
         for (CourseRegistration cs: currentRegistrations) {
             System.out.println("course getting registered: " + courseReg.getCourse() + " mwf:" + cs.isMonday_wednesday_friday() + "    tth:" + courseReg.isTuesday_thursday());
             System.out.println(cs.getCourse().getName() + " mwf? " + cs.isMonday_wednesday_friday() + "     tth? " + cs.isMonday_wednesday_friday());
@@ -85,5 +85,5 @@ public class CourseRegistrationService {
             }
         }
         return true;
-    }*/
+    }
 }
