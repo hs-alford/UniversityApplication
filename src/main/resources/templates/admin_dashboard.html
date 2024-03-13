@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body})}"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="utf-8">
+    <title>Admin Dashboard</title>
+    <!--<link rel="stylesheet" type="text/css" th:href="@{webjars/bootstrap/css/bootstrap.min.css}" />-->
+    <!--<script type="text/javascript" th:src="@{webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{webjars/bootstrap/js/bootstrap.min.js}"></script>-->
+    <link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.6.3/css/all.css}" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous" />
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap4-pleasant.min.css}" />
+
+
+    <link  th:href="@{/css/main.css}" rel="stylesheet" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Ubuntu" rel="stylesheet">
+
+</head>
+<body>
+
+
+    <div class="container-fluid">
+        <div class="p-2 bg-body-tertiary rounded-3" style="background-color: #2a1f3c  !important;">
+            <h2 class="text-body-emphasis" style="color:white !important;">Admin Dashboard</h2>
+        </div>
+        <hr style="color:white;border-color:white;" />
+        <div class="row py-2">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-3 col-lg-2 p-2">
+                            <a class="text-decoration-none admin-shortcut" href="#">
+                                <div class="card p-3 shadow bg-purple1 text-center border-0">
+                                    <div class="card-body">
+                                        <i class="fa fa-database fa-2x" aria-hidden="true"></i>
+                                        <hr />
+                                        <p class="card-title lead">Data Management</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-xs-6 col-sm-6 col-md-3 col-lg-2 p-2">
+                            <a class="text-decoration-none admin-shortcut" href="#">
+                                <div class="card p-3 shadow bg-purple1 text-center border-0">
+                                    <div class="card-body">
+                                        <i class="fa fa-lock fa-2x" aria-hidden="true"></i>
+                                        <hr />
+                                        <p class="card-title lead">Security</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-xs-6 col-sm-6 col-md-3 col-lg-2 p-2">
+                            <a class="text-decoration-none admin-shortcut" href="#">
+                                <div class="card p-3 shadow bg-purple1 text-center border-0">
+                                    <div class="card-body">
+                                        <i class="fa fa-bell fa-2x" aria-hidden="true"></i>
+                                        <hr />
+                                        <p class="card-title lead">Notifications</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-xs-6 col-sm-6 col-md-3 col-lg-2 p-2">
+                            <a class="text-decoration-none admin-shortcut" href="#">
+                                <div class="card p-3 shadow bg-purple1 text-center border-0">
+                                    <div class="card-body">
+                                        <i class="fa fa-sitemap fa-2x" aria-hidden="true"></i>
+                                        <hr />
+                                        <p class="card-title lead">Manage Content</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-xs-6 col-sm-6 col-md-3 col-lg-2 p-2">
+                            <a class="text-decoration-none admin-shortcut" href="#">
+                                <div class="card p-3 shadow bg-purple1 text-center border-0">
+                                    <div class="card-body">
+                                        <i class="fa fa-industry fa-2x" aria-hidden="true"></i>
+                                        <hr />
+                                        <p class="card-title lead">Activity</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-xs-6 col-sm-6 col-md-3 col-lg-2 p-2">
+                            <a class="text-decoration-none admin-shortcut" href="#" data-toggle="modal" data-target="#modelHELP">
+                                <div class="card p-3 shadow bg-purple1 text-center border-0">
+                                    <div class="card-body">
+                                        <i class="fa fa-cogs fa-2x" aria-hidden="true"></i>
+                                        <hr />
+                                        <p class="card-title lead">Settings</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</body>
+</html>

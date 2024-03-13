@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="utf-8">
+    <title>Instructor Dashboard</title>
+    <link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.6.3/css/all.css}" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous" />
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap4-pleasant.min.css}" />
+
+
+    <link  th:href="@{/css/main.css}" rel="stylesheet" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Ubuntu" rel="stylesheet">
+
+
+</head>
+<body>
+<div th:insert="fragments/top_navbar :: top-navbar"></div>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-12">
+            <div class="jumbotron">
+                <h1 class="display-3">Instructor Dashboard!</h1>
+                <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention
+                    to featured content or information.</p>
+                <hr class="my-4">
+                <p>It uses utility classes for typography and spacing to space content out within the larger
+                    container.</p>
+                <p class="lead">
+                    <a class="btn btn-primary" href="#!" role="button">Learn more</a>
+                </p>
+            </div>
+            <!--<div class="alert alert-primary" role="alert">
+                <h4 class="alert-heading">Well done!</h4>
+                You successfully read this important alert message.
+                <a href="#!" class="alert-link">It contains a link and heading.</a>
+            </div>-->
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="well">
+                        <div class="card mb-3 text-center border-primary">
+                            <div class="card-body">
+                                <blockquote class="card-blockquote">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a
+                                        ante.</p>
+
+                                    <a class="btn btn-primary btn-block" th:href="@{/}">Instructor Profile</a>
+                                    <footer>Someone famous in
+                                        <cite title="Source Title">Source Title</cite>
+                                    </footer>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="well">
+                        <div class="card mb-3 text-center border-primary">
+                            <div class="card-body">
+                                <blockquote class="card-blockquote">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a
+                                        ante.</p>
+                                    <a class="btn btn-primary btn-block" th:href="@{/students/dashboard/course_registration}">View Courses</a>
+
+                                    <footer>Someone famous in
+                                        <cite title="Source Title">Source Title</cite>
+                                    </footer>
+                                </blockquote>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="well">
+                        <div class="card mb-3 text-center border-primary">
+                            <div class="card-body">
+                                <blockquote class="card-blockquote">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a
+                                        ante.</p>
+                                    <a class="btn btn-primary btn-block" th:href="@{/students/dashboard/student_schedule}">Other</a>
+
+                                    <footer>Someone famous in
+                                        <cite title="Source Title">Source Title</cite>
+                                    </footer>
+                                </blockquote>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="well">
+                        <div class="card mb-3 text-center border-primary">
+                            <div class="card-body">
+                                <blockquote class="card-blockquote">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a
+                                        ante.</p>
+                                    <a class="btn btn-primary btn-block" th:href="@{/students/dashboard/courses}">Course Information</a>
+
+                                    <footer>Someone famous in
+                                        <cite title="Source Title">Source Title</cite>
+                                    </footer>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<div class="row">
+        <div class="col-4 col-md-3 collapse width show m-0 p-0 bg-dark" id="collapseExample">
+
+            <ul class="nav nav-pills flex-column navbar-dark sticky-top">
+                &lt;!&ndash;<span class="fs-4">University Logo</span>&ndash;&gt;
+                <li class="nav-item">
+                    <a th:href="@{/students/dashboard}" class="nav-link active">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/students/dashboard/course_registration}">Registration</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/students/dashboard/student_schedule}">Student Schedule</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/students/dashboard/courses}">Course Information</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Student Records</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Account</a>
+                </li>
+                <li class="nav-item align-bottom">
+                    <a th:href="@{/}"  class="nav-link">Sign Out</a>
+                </li>
+            </ul>
+
+        </div>
+        <button class="btn sticky-top bg-dark" data-toggle="collapse"
+                href="#collapseExample" role="button" onclick="switchIcon()" style="border-radius: 0;font-size: 2em;">
+            <i class='fas fa-chevron-left' id="collapseBtn" style="color: white"></i>
+        </button>
+        <div class="col">
+
+            <div class="row">
+
+                <div class="col-12">
+                    <div class="jumbotron">
+                        <h1 class="display-3">Student Dashboard!</h1>
+                        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention
+                            to featured content or information.</p>
+                        <hr class="my-4">
+                        <p>It uses utility classes for typography and spacing to space content out within the larger
+                            container.</p>
+                        <p class="lead">
+                            <a class="btn btn-primary" href="#!" role="button">Learn more</a>
+                        </p>
+                    </div>
+                    <div class="alert alert-primary" role="alert">
+                        <h4 class="alert-heading">Well done!</h4>
+                        You successfully read this important alert message.
+                        <a href="#!" class="alert-link">It contains a link and heading.</a>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="well">
+                                <div class="card mb-3 text-center border-primary">
+                                    <div class="card-body">
+                                        <blockquote class="card-blockquote">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a
+                                                ante.</p>
+
+                                            <a class="btn btn-primary btn-block" th:href="@{/students/dashboard/student_information}">Student Information</a>
+                                            <footer>Someone famous in
+                                                <cite title="Source Title">Source Title</cite>
+                                            </footer>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="well">
+                                <div class="card mb-3 text-center border-primary">
+                                    <div class="card-body">
+                                        <blockquote class="card-blockquote">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a
+                                                ante.</p>
+                                            <a class="btn btn-primary btn-block" th:href="@{/students/dashboard/course_registration}">Registration</a>
+
+                                            <footer>Someone famous in
+                                                <cite title="Source Title">Source Title</cite>
+                                            </footer>
+                                        </blockquote>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="well">
+                                <div class="card mb-3 text-center border-primary">
+                                    <div class="card-body">
+                                        <blockquote class="card-blockquote">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a
+                                                ante.</p>
+                                            <a class="btn btn-primary btn-block" th:href="@{/students/dashboard/student_schedule}">Student Schedule</a>
+
+                                            <footer>Someone famous in
+                                                <cite title="Source Title">Source Title</cite>
+                                            </footer>
+                                        </blockquote>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="well">
+                                <div class="card mb-3 text-center border-primary">
+                                    <div class="card-body">
+                                        <blockquote class="card-blockquote">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a
+                                                ante.</p>
+                                            <a class="btn btn-primary btn-block" th:href="@{/students/dashboard/courses}">Course Information</a>
+
+                                            <footer>Someone famous in
+                                                <cite title="Source Title">Source Title</cite>
+                                            </footer>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+</div>
+
+
+
+<script th:src="@{https://code.jquery.com/jquery-3.3.1.slim.min.js}" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script>
+
+    function switchIcon() {
+        var elm1 = document.getElementById("collapseBtn");
+        var elm2 = document.getElementById("collapseExample");
+        if (!document.getElementById("collapseExample").classList.contains("show")) {
+            elm1.classList.replace("fa-chevron-right", "fa-chevron-left");
+        } else {
+            elm1.classList.replace("fa-chevron-left", "fa-chevron-right");
+        }
+    }
+
+
+</script>
+
+</body>
+</html>

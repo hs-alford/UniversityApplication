@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	  th:replace="~{fragments/layout :: layout (~{::body})}"
+	  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+	<meta charset="utf-8">
+	<title>List Users</title>
+	<!--<link rel="stylesheet" type="text/css" th:href="@{webjars/bootstrap/css/bootstrap.min.css}" />-->
+	<!--<script type="text/javascript" th:src="@{webjars/jquery/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{webjars/bootstrap/js/bootstrap.min.js}"></script>-->
+	<link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.6.3/css/all.css}" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous" />
+
+	<link rel="stylesheet" th:href="@{/css/bootstrap4-pleasant.min.css}" />
+
+
+	<link  th:href="@{/css/main.css}" rel="stylesheet" />
+
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans|Ubuntu" rel="stylesheet">
+
+</head>
+<body>
+
+
+
+<div class="container-fluid">
+
+	<div class="container-fluid py-5 mb5">
+
+		<h1 class="mb-5 text-center" id="testcss">User List</h1>
+
+		<div class="row">
+			<div class="col-md-3">
+				<form class="mb-3">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Search">
+						<div class="input-group-append">
+							<button type="submit" class="btn btn-primary">Search</button>
+						</div>
+					</div>
+				</form>
+
+				<div th:insert="fragments/admin/admin_tables_sidebar :: admin_tables_sidebar"></div>
+			</div>
+
+
+			<div class="col-md-9">
+				<a th:href="@{/admin/users/new}" class="btn btn-success" style="margin-bottom: 1em">New User Registration <span class="fas fa-user-plus"></span></a>
+
+				<table class="table">
+					<thead>
+					<tr>
+						<th scope="col">Id</th>
+						<th scope="col">Username</th>
+						<th scope="col">Role(s)</th>
+						<th scope="col">Actions</th>
+					</tr>
+					</thead>
+					<tbody>
+
+					<tr th:each="user: ${listUsers}">
+						<td th:text="${user.id}">User ID</td>
+						<td th:text="${user.username}">Username</td>
+						<td th:text="${user.roles}">Roles</td>
+						<td>
+							<div class="btn-group">
+								<a th:href="@{'/admin/users/edit/' + ${user.id}}" class="btn btn-sm btn-primary my-1 my-sm-0">
+									<span class="fas fa-edit mr-1"></span>
+									Edit</a>
+								<a href="#" class="btn btn-sm btn-danger my-1 my-sm-0">
+									<span class="fas fa-trash mr-1"></span>
+									Delete</a>
+							</div>
+						</td>
+					</tr>
+
+
+
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+
+	</div>
+
+
+</div>
+
+<script th:src="@{https://code.jquery.com/jquery-3.3.1.slim.min.js}" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+</body>
+</html>

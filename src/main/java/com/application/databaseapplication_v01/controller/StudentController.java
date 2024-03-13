@@ -40,7 +40,8 @@ public class StudentController {
     private CourseRegistrationService courseRegistrationService;
 
     @GetMapping("/dashboard")
-    public String showStudentDashboard() {
+    public String showStudentDashboard(Model model) {
+        model.addAttribute("title", "laksdj;");
         return "student_dashboard";
     }
 

@@ -35,6 +35,12 @@ public class AdminController {
     @Autowired
     private SemesterService semesterService;
 
+    @GetMapping("/dashboard")
+    public String openAdminDashboard(Model model) {
+
+        return "admin_dashboard";
+    }
+
     @GetMapping("/users")
     public String listUsers(Model model) {
         List<User> listUsers = userService.listAll();

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns:th="https://www.thymeleaf.org"
+	  th:replace="~{fragments/layout :: layout (~{::body})}"
+	  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 	<meta charset="utf-8">
 	<title>List Users</title>
@@ -20,7 +21,6 @@
 <body>
 
 
-<div th:insert="fragments/top_navbar :: top-navbar"></div>
 
 <div class="container-fluid">
 
@@ -47,7 +47,7 @@
 				<a th:href="@{/admin/users/new}" class="btn btn-success" style="margin-bottom: 1em">New User Registration <span class="fas fa-user-plus"></span></a>
 
 				<table class="table">
-					<thead class="thead-light">
+					<thead>
 					<tr>
 						<th scope="col">Id</th>
 						<th scope="col">Username</th>

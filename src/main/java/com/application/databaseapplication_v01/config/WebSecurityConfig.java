@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 @Configuration
@@ -22,24 +24,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
 	}
 
-	/*@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler(
-						"/webjars/**",
-						"/img/**",
-						"/css/**",
-						"/js/**")
-				.addResourceLocations(
-						"classpath:/META-INF/resources/webjars/",
-						"classpath:/static/img/",
-						"classpath:/static/css/",
-						"classpath:/static/js/");
-	}*/
+	@Bean
+	public AuthenticationFailureHandler authenticationFailureHandler() {
+		return new CustomAuthenticationFailureHandler();
+	}
 
-	/*@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
-	}*/
+	@Bean
+	public AccessDeniedHandler accessDeniedHandler() {
+		return new CustomAccessDeniedHandler();
+	}
 
 	@Bean
 	public UserDetailsService userDetailsService() {
@@ -69,17 +62,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers("/css/**").permitAll()
-				.antMatchers("/users/**").authenticated()
-				.antMatchers("/students/**").hasRole("STUDENT")
-				.antMatchers("/instructors/**").hasRole("INSTRUCTOR")
+				//.antMatchers("/users/**").authenticated()
+				.antMatchers("/admin").hasRole("ADMIN")
+				.antMatchers("/student").hasRole("STUDENT")
+				.antMatchers("/instructor").hasRole("INSTRUCTOR")
 				.anyRequest().permitAll()
 				.and()
 				.formLogin()
 				.usernameParameter("username")
-				//.defaultSuccessUrl("/users")
+				//.failureHandler(authenticationFailureHandler())
 				.successHandler(customAuthenticationSuccessHandler)
 				.permitAll()
 				.and()
-				.logout().logoutSuccessUrl("/").permitAll();
+				.logout().logoutSuccessUrl("/").permitAll()
+				.and()
+				.exceptionHandling(ex -> ex.accessDeniedHandler(accessDeniedHandler()));
+
+
 	}
 }

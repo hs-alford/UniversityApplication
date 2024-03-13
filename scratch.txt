@@ -1,3 +1,325 @@
+
+=====================
+
+
+<div th:fragment="admin_tables_sidebar" >
+
+    <div class="list-group" id="admin_tables_sidebar_div">
+        <a th:href="@{/admin/users}" class="list-group-item list-group-item-action">Users</a>
+        <a th:href="@{/admin/students}" class="list-group-item list-group-item-action">Students</a>
+        <a th:href="@{/admin/instructors}" class="list-group-item list-group-item-action">Instructors</a>
+        <a th:href="@{/admin/courses}" class="list-group-item list-group-item-action">Courses</a>
+        <a th:href="@{/admin/departments}" class="list-group-item list-group-item-action">Departments</a>
+        <a th:href="@{/admin/semesters}" class="list-group-item list-group-item-action">Semesters</a>
+        <a th:href="@{/admin/course_registrations}" class="list-group-item list-group-item-action">Course Registrations</a>
+
+    </div>
+    <script>
+        function setActive() {
+            linkObj = document.getElementById('admin_tables_sidebar_div').getElementsByTagName('a');
+            for(i=0;i<linkObj.length;i++) {
+                if(document.location.href.indexOf(linkObj[i].href)>=0) {
+                    linkObj[i].classList.add("active");
+                }
+            }
+        }
+
+        window.onload = setActive;
+    </script>
+</div>
+
+
+
+    <!DOCTYPE html>
+    <html xmlns:th="http://www.thymeleaf.org"
+          xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+          th:fragment="layout (content)">
+    <head>
+        <meta charset="utf-8">
+        <title>University Application</title>
+        <!--<link rel="stylesheet" type="text/css" th:href="@{webjars/bootstrap/css/bootstrap.min.css}" />-->
+        <!--<script type="text/javascript" th:src="@{webjars/jquery/jquery.min.js}"></script>
+        <script type="text/javascript" th:src="@{webjars/bootstrap/js/bootstrap.min.js}"></script>-->
+        <link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.6.3/css/all.css}" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous" />
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+
+        <link  th:href="@{/css/main.css}" rel="stylesheet" />
+
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans|Ubuntu" rel="stylesheet">
+
+    </head>
+    <body class="body-for-sticky" style="background-color:#2a1f3c !important;">
+    <header class="p-3 mb-3" style="background-color:black;">
+        <div class="container-fluid">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" style="height:2.5em;width:2.5em;" fill="white" class="bi bi-rocket-takeoff-fill" viewBox="0 0 16 16">
+                        <path d="M12.17 9.53c2.307-2.592 3.278-4.684 3.641-6.218.21-.887.214-1.58.16-2.065a3.6 3.6 0 0 0-.108-.563 2 2 0 0 0-.078-.23V.453c-.073-.164-.168-.234-.352-.295a2 2 0 0 0-.16-.045 4 4 0 0 0-.57-.093c-.49-.044-1.19-.03-2.08.188-1.536.374-3.618 1.343-6.161 3.604l-2.4.238h-.006a2.55 2.55 0 0 0-1.524.734L.15 7.17a.512.512 0 0 0 .433.868l1.896-.271c.28-.04.592.013.955.132.232.076.437.16.655.248l.203.083c.196.816.66 1.58 1.275 2.195.613.614 1.376 1.08 2.191 1.277l.082.202c.089.218.173.424.249.657.118.363.172.676.132.956l-.271 1.9a.512.512 0 0 0 .867.433l2.382-2.386c.41-.41.668-.949.732-1.526zm.11-3.699c-.797.8-1.93.961-2.528.362-.598-.6-.436-1.733.361-2.532.798-.799 1.93-.96 2.528-.361s.437 1.732-.36 2.531Z"/>
+                        <path d="M5.205 10.787a7.6 7.6 0 0 0 1.804 1.352c-1.118 1.007-4.929 2.028-5.054 1.903-.126-.127.737-4.189 1.839-5.18.346.69.837 1.35 1.411 1.925"/>
+                    </svg>            </a>
+
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <!--
+                     <li><a href="#" class="nav-link px-2 link-secondary">Overview</a></li>
+                    <li><a href="#" class="nav-link px-2 link-body-emphasis">Inventory</a></li>
+                    <li><a href="#" class="nav-link px-2 link-body-emphasis">Customers</a></li>
+                    <li><a href="#" class="nav-link px-2 link-body-emphasis">Products</a></li>
+                     -->
+
+                </ul>
+
+                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+                    <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+                </form>
+
+                <div class="dropdown text-end">
+                    <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                    </a>
+                    <ul class="dropdown-menu text-small">
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" th:href="@{/admin/users}">Admin Area</a>
+                        <li><a class="dropdown-item" th:href="@{/student/dashboard}">Student Area</a></li>
+                        <li><a class="dropdown-item" th:href="@{/instructor/dashboard}">Instructor Area</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <div class="d-flex" >
+                                <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post">
+
+                                    <!--<span sec:authentication="principal.authorities"></span>-->
+                                    <input class="form-control mr-sm-2 ml-3" type="submit" value="Sign Out" />
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+
+    <div class="container-fluid" style="height:100vh;">
+
+        <div th:insert="${content}" class="py-2 mb5">
+
+
+        </div>
+
+
+    </div>
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top .sticky-footer">
+        <p class="col-md-4 mb-0">© 2024 Company, Inc</p>
+
+        <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+            <svg class="bi me-2" style="color:white;" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+        </a>
+
+        <ul class="nav col-md-4 justify-content-end">
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Pricing</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
+        </ul>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    </body>
+    </html>
+
+
+    ===================32901480925103297581327508913587213650371265715325730127560  32785607125712365
+
+    <div class="row">
+
+            <div class="col-12">
+                <div class="jumbotron">
+                    <h1 class="display-3">Register For Courses!</h1>
+                    <hr class="my-4">
+                    <p>It uses utility classes for typography and spacing to space content out within the larger
+                        container.</p>
+                    <div>
+                        <div class="card">
+                            <div class="card-header">
+                                Quote
+                            </div>
+                            <div class="card-body">
+                                <div>
+                                    <div class="form-group">
+                                        <label>Department</label>
+                                        <select class="custom-select" id="deptName_select">
+                                            <option value="">Choose Department...</option>
+                                            <div th:each="dept: ${departments}">
+                                                <option th:value="${dept.dept_name}" th:text="${dept.dept_name}"></option>
+                                            </div>
+
+                                        </select>
+                                    </div>
+
+
+
+                                    <!--<div class="custom-control custom-radio">
+                                        <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+                                        <label class="custom-control-label" for="customRadio1">Toggle this custom radio</label>
+                                    </div>
+
+
+                                    <input class="form-control" type="text" value="Text input" id="example-text-input">-->
+
+
+                                    <div class="form-group">
+                                        <label>Course Section Number</label>
+                                        <input type="text" class="form-control" id="courseSection_input" placeholder="Section Number... (Optional)">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" onclick="searchCourses()">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!--<div class="alert alert-primary" role="alert">
+                    <h4 class="alert-heading">Well done!</h4>
+                    You successfully read this important alert message.
+                    <a href="#!" class="alert-link">It contains a link and heading.</a>
+                </div>-->
+                <!--<div th:if="${conflict}" th:text="${conflict}" class="alert" />-->
+                <div th:if="${conflict}" class="alert alert-primary alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="alert-heading">Sorry!</h4>
+                    Your current schedule has a time conflict with this course.
+                    <a href="#!" class="alert-link">View your current schedule</a>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+
+                        <table class="table" id="courseList">
+                            <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Department-Course</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Instructor</th>
+                                <th scope="col">Time</th>
+                                <th scope="col">Weekdays</th>
+                                <th scope="col">Seats Filled</th>
+                                <th scope="col">Max Seats</th>
+                                <th scope="col">Semester</th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr th:each="regcourse: ${offered_courses}" class="courseTableRow table-primary">
+                                <!--<td th:text="${course.id}">Id</td>-->
+                                <td th:text="${regcourse.course.department.getSection_abbr() + '-' + regcourse.course.getSection()}"></td>
+                                <td th:text="${regcourse.course.getName()}">Course</td>
+                                <td th:text="${regcourse.instructor.getFullName()}"></td>
+                                <td th:text="${regcourse.start_time + ' - ' + regcourse.end_time}"></td>
+
+                                <td th:text="${regcourse.weekdays()}"></td>
+                                <td th:text="${regcourse.seats_filled}" class="seats"></td>
+                                <td th:text="${regcourse.max_seats}" class="max"></td>
+                                <td th:text="${regcourse.semester.getSemester() + ' ' + regcourse.semester.getYear()}"></td>
+                                <td>
+                                    <a th:href="@{'/students/dashboard/course_registration/process/' + ${regcourse.id}}" id="course_id"  class="btn btn-sm btn-primary my-1 my-sm-0 registration_action">
+                                        <span class="fas fa-edit mr-1"></span>
+                                        Register</a>
+                                </td>
+                                <td th:text="${regcourse.getCourse().getDepartment().dept_name}" class="deptNameSearch" style="display: none"></td>
+                                <td th:text="${regcourse.getCourse().section}" class="courseSectionSearch" style="display: none"></td>
+
+                            </tr>
+
+
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+   =========================
+
+            <div class="row py-3">
+                <div class="col-sm-3">
+                    <a th:href="@{/student/dashboard/student_information}" class="student-section-link" style="--bs-icon-link-transform: translate3d(0, -.125rem, 0);">
+                        <div class="card text-center mb-3">
+                            <h5 class="card-header">Student Information</h5>
+                            <div class="card-body">
+                                <p class="card-text">View your student account info, transcripts, records, and more!</p>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+                <div class="col-sm-3">
+                    <a th:href="@{/student/dashboard/course_registration}" class="student-section-link">
+                        <div class="card text-center mb-3">
+                            <h5 class="card-header">Course Registration</h5>
+                            <div class="card-body">
+                                <p class="card-text">Browse and register for the upcoming semester's courses!</p>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+                <div class="col-sm-3">
+                    <a th:href="@{/student/dashboard/student_schedule}" class="student-section-link">
+                        <div class="card text-center mb-3">
+                            <h5 class="card-header">Student Schedule</h5>
+                            <div class="card-body">
+                                <p class="card-text">View your schedule for the current semester!</p>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+                <div class="col-sm-3">
+                    <a th:href="@{/student/dashboard/courses}" class="student-section-link">
+                        <div class="card text-center mb-3">
+                            <h5 class="card-header">Degree Tracker</h5>
+                            <div class="card-body">
+                                <p class="card-text">Application where you can plan the path you take to get your degree.</p>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+
+
+
+/*@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler(
+						"/webjars/**",
+						"/img/**",
+						"/css/**",
+						"/js/**")
+				.addResourceLocations(
+						"classpath:/META-INF/resources/webjars/",
+						"classpath:/static/img/",
+						"classpath:/static/css/",
+						"classpath:/static/js/");
+	}*/
+
+	/*@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+	}*/
+
+
+====
 <script th:inline="javascript" type="text/javascript">
     /*<![CDATA[*/
 

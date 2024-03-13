@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="utf-8">
+    <title>Admin Edit/Create Semesters</title>
+    <!--<link rel="stylesheet" type="text/css" th:href="@{webjars/bootstrap/css/bootstrap.min.css}" />-->
+    <!--<script type="text/javascript" th:src="@{webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{webjars/bootstrap/js/bootstrap.min.js}"></script>-->
+    <link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.6.3/css/all.css}" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous" />
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap4-pleasant.min.css}" />
+
+
+    <link  th:href="@{/css/main.css}" rel="stylesheet" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Ubuntu" rel="stylesheet">
+
+</head>
+<body>
+
+
+<div th:insert="fragments/top_navbar :: top-navbar"></div>
+
+
+<div class="container-fluid">
+
+
+    <div class="container py-5 mb5">
+
+        <h1 class="mb-5 text-center" id="testcss">Semester View, Edit, Create</h1>
+
+        <form th:action="@{/admin/semesters/save/semester}" th:object="${semester}" method="post">
+            <input type="hidden" th:field="*{id}" />
+            <h4 class="mb-3">Semester Information</h4>
+
+            <div class="row">
+                <div class="col-md-5  mb-3">
+                    <label>Semester</label>
+                    <select class="custom-select d-block " th:field="*{semester}" required >
+                        <option th:value="*{semester}" th:text="*{semester} ? *{semester} : 'Choose Semester...'">Choose Semester..</option>
+                        <div th:each="name: ${semesterSessionNames}">
+                            <option th:value="${name}" th:text="${name}"></option>
+                        </div>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label>Year</label>
+                    <input type="text" th:field="*{year}" class="form-control" required />
+                    <div class="invalid-feedback">
+                        Valid year code is required.
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label>Status</label>
+                    <!--<input type="text" class="form-control" th:field="*{active}" />-->
+                    <select class="custom-select d-block" th:field="*{active}" required>
+                        <option th:value="*{active}" th:text="*{active} ? *{active} : 'Semester Status...'">Semester Status...</option>
+                        <option value="0">Inactive (Semester Completed)</option>
+                        <option value="1">Active (Current Session)</option>
+
+                    </select>
+                    <div class="invalid-feedback">
+                        Semester status is required.
+                    </div>
+                </div>
+            </div>
+
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Save</button>
+        </form>
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+
+</script>
+
+<script th:src="@{https://code.jquery.com/jquery-3.3.1.slim.min.js}" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+</body>
+</html>
+

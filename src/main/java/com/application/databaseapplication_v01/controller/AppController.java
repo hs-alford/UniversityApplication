@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -54,7 +57,14 @@ public class AppController {
 		return "student_dashboard";
 	}
 
-
+	@GetMapping("/access-denied")
+	public String openAccessDeniedPage(Model model)
+	{
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		String dateString = dateFormat.format(new Date());
+		model.addAttribute("currentDate", dateString);
+		return "access-denied";
+	}
 
 
 }
