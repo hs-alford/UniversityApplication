@@ -67,17 +67,6 @@ public class StudentService {
             pc_End = potentialCourse.getEnd_time().toLocalTime();
             cs_start = cs.getStart_time().toLocalTime();
             cs_end = cs.getEnd_time().toLocalTime();
-            System.out.println("pcstart: " + potentialCourse.getStart_time());
-            System.out.println("pcsend: " + potentialCourse.getEnd_time());
-            System.out.println("csstart: " + cs.getStart_time());
-            System.out.println("csend: " + cs.getEnd_time());
-            System.out.println("pcstart_local: " + pc_Start);
-            System.out.println("pcsend_local: " + pc_End);
-            System.out.println("csstart_local: " + cs_start);
-            System.out.println("csend_local: " + cs_end);
-            System.out.println("course getting registered: " + potentialCourse.getCourse().getName() + " mwf:" + potentialCourse.isMonday_wednesday_friday() + "    tth:" + potentialCourse.isTuesday_thursday());
-            System.out.println(cs.getCourse().getName() + " mwf: " + cs.isMonday_wednesday_friday() + "     tth: " + cs.isTuesday_thursday());
-            System.out.println();
             if (cs.isMonday_wednesday_friday() == potentialCourse.isMonday_wednesday_friday()) {
                 if ((pc_Start.isAfter(cs_start) && pc_Start.isBefore(cs_end)) || (pc_End.isBefore(cs_end) && pc_End.isAfter(cs_start))) {
                     return true;
